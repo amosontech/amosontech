@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body{
+            background: hsl(0, 0%, 95%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+        }
+        .container{
+            padding: 10px;
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            box-shadow: 1px 1px 5px #757575;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .game{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .you,
+        .com{
+            width: 100%;
+            text-align: center;
+        }
+        h1{
+            font-size: 20px;
+        }
+        p{
+            font-size: 22px;
+            padding: 5px;
+        }
+        .btn{
+            height: 45px;
+            width: 150px;
+            font-size: 25px;
+            border-radius: 10px;
+            background: hsl(240, 100%, 70%);
+            color: #fff;
+            border: none;
+            outline: none;
+        }
+        .result{
+            text-align: center;
+            font-size: 25px;
+            color: gold;
+        }
+        .result img{
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-top: 10px;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p>Click the button below to play</p>
+        <button class="btn">Click</button>
+        <div class="result">
+            <img src="" id="result-img" alt="">
+            <p id="res-status"></p>
+        </div>
+        <div class="game">
+            <div class="you">
+                <h1>You</h1>
+                <img src="./unk.png" id="you-img" alt="">
+            </div>
+            <div class="com">
+                <h1>Computer</h1>
+                <img src="./unk.png" id="com-img" alt="">
+            </div>
+        </div>
+    </div>
+    <script>
+        var btn = document.querySelector(".btn");
+        btn.onclick = ()=>{
+            var img = document.querySelectorAll("img");
+            var youNum = Math.floor(Math.random() * 9);
+            var comNum = Math.floor(Math.random() * 9);
+            console.log(youNum);
+            console.log(comNum);
+            var youImg = document.querySelector("#you-img");
+            var resImg = document.querySelector("#result-img");
+            var comImg = document.querySelector("#com-img");
+            document.querySelector("#res-status").innerHTML = "RUNNING!";
+            resImg.style.opacity = "0";
+            img.forEach((img)=>{
+                img.src = "./unk.png";
+            });
+            setTimeout(() => {
+                if(youNum > comNum){
+                    youImg.src = "./scissors.png";
+                    comImg.src = "./paper.png";
+                    resImg.src = "./success.png";
+                    resImg.style.opacity = "1";
+                    document.querySelector("#res-status").innerHTML = "YOU WIN!";
+                }
+
+                if(youNum < comNum){
+                    comImg.src = "./scissors.png";
+                    youImg.src = "./paper.png";
+                    resImg.src = "./failed.png";
+                    resImg.style.opacity = "1";
+                    document.querySelector("#res-status").innerHTML = "YOU FAILED!";
+                }
+
+                if(youNum == comNum){
+                    comImg.src = "./draw.png";
+                    youImg.src = "./draw.png";
+                    resImg.src = "./draw.png";
+                    resImg.style.opacity = "1";
+                    document.querySelector("#res-status").innerHTML = "DRAW!";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
